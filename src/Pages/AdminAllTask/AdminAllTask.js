@@ -5,11 +5,17 @@ const AdminAllTask = () => {
   const [task, setTask] = useState([]);
   const [fackEmail, setFackEmail] = useState([]);
   const handleShow = (email) => {
-    fetch(`https://whispering-woodland-96025.herokuapp.com?email=${email}`)
+    fetch(
+      `https://whispering-woodland-96025.herokuapp.com/tasks?email=${email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setFackEmail(data);
-        alert(`Task Dateline is : ${fackEmail[0].date}`);
+        alert(
+          `Task Dateline is : ${
+            fackEmail[0]?.date ? fackEmail[0]?.date : "please try again"
+          }`
+        );
       });
   };
   useEffect(() => {
