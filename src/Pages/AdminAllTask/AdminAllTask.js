@@ -3,6 +3,15 @@ import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 const AdminAllTask = () => {
   const [task, setTask] = useState([]);
+  const [fackEmail, setFackEmail] = useState([]);
+  const handleShow = (email) => {
+    fetch(`https://whispering-woodland-96025.herokuapp.com?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setFackEmail(data);
+        alert(`Task Dateline is : ${fackEmail[0].date}`);
+      });
+  };
   useEffect(() => {
     fetch("https://whispering-woodland-96025.herokuapp.com/submit")
       .then((res) => res.json())
@@ -34,6 +43,7 @@ const AdminAllTask = () => {
             <th className="text-center">Serial</th>
             <th className="text-center">Email</th>
             <th className="text-center">Task Info</th>
+            <th className="text-center">Submit Date</th>
             <th className="text-center">Action</th>
           </tr>
         </thead>
@@ -43,6 +53,7 @@ const AdminAllTask = () => {
               <td className="text-center">{index + 1}</td>
               <td className="text-center">{tsk.email}</td>
               <td className="text-center">{tsk.task}</td>
+              <td className="text-center">{tsk.sumbitDate}</td>
               <td className="text-center">
                 <button
                   className="btn btn-primary"
@@ -55,6 +66,12 @@ const AdminAllTask = () => {
                   onClick={() => handeldelet(tsk._id)}
                 >
                   Delete
+                </button>
+                <button
+                  className="btn btn-warning ms-2"
+                  onClick={() => handleShow(tsk.email)}
+                >
+                  Submit Info
                 </button>
               </td>
             </tr>
